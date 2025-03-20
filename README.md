@@ -41,7 +41,7 @@ A web application that analyzes URLs to extract images and perform word frequenc
    - Used for word frequency visualization
    - CDN: `https://cdn.jsdelivr.net/npm/chart.js`
 
-### Features
+## Features
 
 1. **Image Carousel**
    - Implemented using Bootstrap's built-in carousel component
@@ -75,7 +75,7 @@ A web application that analyzes URLs to extract images and perform word frequenc
 2. **Installation**
    ```bash
    # Clone the repository
-   git clone [repository-url]
+   git clone https://github.com/rajveersinghsodha/UrlAnalyzer.git
 
    # Open the solution in Visual Studio
    # Build the solution (this will restore NuGet packages automatically)
