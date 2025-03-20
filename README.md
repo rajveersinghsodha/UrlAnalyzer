@@ -73,21 +73,25 @@ A web application that analyzes URLs to extract images and perform word frequenc
    - Internet connection (for CDN resources)
 
 2. **Installation**
-   ```bash
-   # Clone the repository
-   git clone https://github.com/rajveersinghsodha/UrlAnalyzer.git
+   # Create Directory Structure 
+  -  Open Command Prompt (Win + R, type cmd, and press Enter).
+  -  Run the following command: mkdir C:\Analyzer
+  -  After This Run This Command : cd C:\Analyzer      
 
-   # Open the solution in Visual Studio
-   # Build the solution (this will restore NuGet packages automatically)
-   ```
-
-3. **Running the Application**
-   - Press F5 in Visual Studio to run the application
-   - Or use the command line:
-     ```bash
-     dotnet run
-     ```
-
+   # Clone the repository and Run Through Command Line
+   
+  - Run Below command clone repository
+  
+    git clone https://github.com/rajveersinghsodha/UrlAnalyzer.git
+  - Run This Command : cd UrlAnalyzer
+  - Run This Command : dotnet run
+  - You Will Find the Url just click and page will Show
+  
+  # For Open In Visual Studio
+  - Go to Project C:\Analyzer\UrlAnalyzer and open in visual studio
+  - Press F5 in Visual Studio to run the application
+   
+ 
 ## Project Structure
 
 - `Controllers/`: MVC controllers
