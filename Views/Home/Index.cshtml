@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4 mb-4">URL Analyzer</h1>
+    <p class="lead mb-4">Enter a URL to analyze its images and word frequency</p>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="Analyze" method="post" class="mb-4">
+                <div class="input-group">
+                    <input type="url" name="url" class="form-control form-control-lg" 
+                           placeholder="https://example.com" required 
+                           pattern="https?://.+"
+                           title="Please enter a valid URL starting with http:// or https://" />
+                    <button type="submit" class="btn btn-primary btn-lg">Analyze</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

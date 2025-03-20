@@ -1,0 +1,123 @@
+@model UrlAnalyzer.DTOs.UrlAnalysisResponse
+
+@{
+    ViewData["Title"] = "Analysis Result";
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary mb-4">
+                <i class="bi bi-arrow-left"></i> Analyze Another URL
+            </a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.Error))
+    {
+        <div class="alert alert-danger" role="alert">
+            @Model.Error
+        </div>
+        return;
+    }
+
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Images Found (@Model.Images.Count)</h2>
+            @if (Model.Images.Any())
+            {
+                <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @for (var i = 0; i < Model.Images.Count; i++)
+                        {
+                            <div class="carousel-item @(i == 0 ? "active" : "")">
+                                <img src="@Model.Images[i].Url" class="d-block w-100" alt="@Model.Images[i].AltText"
+                                     style="max-height: 400px; object-fit: contain;">
+                                @if (!string.IsNullOrEmpty(Model.Images[i].AltText))
+                                {
+                                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50">
+                                        <p>@Model.Images[i].AltText</p>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                    @if (Model.Images.Count > 1)
+                    {
+                        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>No images found on the page.</p>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Word Analysis</h2>
+            <p>Total words found: @Model.TotalWordCount</p>
+            <h3>Top 10 Words</h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Word</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var word in Model.TopWords)
+                        {
+                            <tr>
+                                <td>@word.Word</td>
+                                <td>@word.Count</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <canvas id="wordChart"></canvas>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('wordChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [@Html.Raw(string.Join(",", Model.TopWords.Select(w => $"'{w.Word}'")))],
+                    datasets: [{
+                        label: 'Word Frequency',
+                        data: [@string.Join(",", Model.TopWords.Select(w => w.Count))],
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+} 
